@@ -1,0 +1,31 @@
+{
+  "name": "minpac",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Leon Franken",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "build": "webpack --mode production",
+    "server": "webpack-dev-server --mode development",
+    "start": "npm-run-all server"
+  },
+  "dependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "7",
+    "babel-preset-env": "^1.7.0",
+    "css-loader": "^2.1.0",
+    "mini-css-extract-plugin": "^0.5.0",
+    "node-sass": "^4.11.0",
+    "npm-run-all": "^4.1.5",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "post-compile-webpack-plugin": "^0.1.2",
+    "sass-loader": "^7.1.0",
+    "start": "^5.1.0",
+    "uglifyjs-webpack-plugin": "^2.1.1",
+    "webpack": "^4.28.1",
+    "webpack-cli": "^3.2.1",
+    "webpack-dev-server": "^3.1.14",
+    "yarn": "^1.13.0"
+  }
+}

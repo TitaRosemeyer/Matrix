@@ -1,3 +1,89 @@
-p {
-    color: green;
+body{
+    box-sizing: border-box;
+}
+h1{
+    text-align: center;
+}
+.right-info{
+    position: relative;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    padding-left: 20px;
+    margin: 20px;
+    width:500px;
+}
+#fourier{
+    float: right;
+    margin: 10px;
+    margin-top: 0%;
+    height: 50%;
+    width: 50%;
+}
+.bottom-info{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    min-width: 750px;
+    height: 200px;
+    padding: 20px;
+}
+.bottom-info > div {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    background-color: white;
+    margin: 10px;
+    text-align: center;
+    height: inherit;
+    overflow: auto;
+}
+.bottom-info > img {
+    margin: 10px;
+    height: inherit;
+}
+.mathe{
+    border: 2px solid black;
+    font-size: 17px;
+    width: 100%;
+    margin: 20px;
+    margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+.midflex{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.beginleft{
+    justify-content: flex-start;
+}
+.math-table{
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.math-table > div{
+    width: 50%;
+    text-align: center;
+}
+.zusammenfassen{
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+}
+.box{
+    background-color: lightseagreen;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    transition: box-shadow 0.5s, background-color 0.5s;
+}
+.box:hover{
+    box-shadow: 0 8px 16px 0 rgba(255, 0, 0, 0.2), 0 12px 40px 0 rgba(255, 0, 0, 0.19);
+    background-color: rgb(156, 231, 229);
 }

@@ -4,6 +4,152 @@ body{
 h1{
     text-align: center;
 }
+.box{
+    background-color: lightseagreen;
+    transition: box-shadow 0.5s, background-color 0.5s;
+}
+.coolshadow{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.box:hover{
+    box-shadow: 0 4px 8px 0 rgba(255, 0, 0, 0.2), 0 6px 20px 0 rgba(255, 0, 0, 0.19);
+    background-color: rgb(156, 231, 229);
+}
+.bottom-info{
+    margin: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    min-width: 750px;
+    height: 200px;
+    padding: 20px;
+}
+.bottom-info > div {
+    background-color: white;
+    margin: 10px;
+    text-align: center;
+    height: inherit;
+    overflow: auto;
+}
+.bottom-info > img {
+    margin: 10px;
+    height: inherit;
+}
+.zusammenfassen{
+    display: flex;
+    align-items: flex-start;
+    justify-content: stretch;
+    width: 100%;
+}
+.two-left{
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+}
+.mathe{
+    font-size: 17px;
+    width: 100%;
+    margin: 20px;
+    margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    justify-content: center;
+}
+.inputs{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}
+.zahlInput{
+    margin: 2.5px;
+}
+.ergebnisliste{
+    margin: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+.ergebnispaar{
+    min-width: 200px;
+    width: 25%;
+    display: flex;
+    justify-content: space-evenly;
+}
+.ergebnispaar > div{
+    min-width: 100px;
+    width: 25%;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    text-align: center;
+}
+.operator{
+    margin-right: 5px;
+}
+.ergebnis{
+}
+.mathe > button{
+    background-color: lightseagreen;
+    margin: 20px;
+    width: 150px;
+    height: 50px;
+    border: 0;
+}
+.spiel{
+    font-size: 17px;
+    width: 100%;
+    margin: 20px;
+    padding: 10px;
+    padding-right: 30px;
+    margin-right: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    flex-flow: column;
+}
+.overgame{
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}
+.overgame > button {
+    height: 25px;
+}
+.undergame{
+    padding-left: 10px;
+}
+.meter{
+    width:100%;
+    border-top: 2px solid black;
+}
+.target{
+    position: relative;
+    bottom: 8px;
+    left: 100px - 6.8px;
+    font-size: 30px;
+}
+.redBox{
+    align-self: flex-start;
+    margin-bottom: 10px;
+    width:100px;
+    height:100px;
+    background-color: red;
+}
+.redBoxTransition{
+    transition: width 2s;
+    transition-timing-function: ease-in;
+    
+    &:hover {
+        width: 100%;
+    }
+
+}
+
 .right-info{
     position: relative;
     right: 0;
@@ -19,71 +165,4 @@ h1{
     margin-top: 0%;
     height: 50%;
     width: 50%;
-}
-.bottom-info{
-    margin: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    align-content: center;
-    min-width: 750px;
-    height: 200px;
-    padding: 20px;
-}
-.bottom-info > div {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    background-color: white;
-    margin: 10px;
-    text-align: center;
-    height: inherit;
-    overflow: auto;
-}
-.bottom-info > img {
-    margin: 10px;
-    height: inherit;
-}
-.mathe{
-    border: 2px solid black;
-    font-size: 17px;
-    width: 100%;
-    margin: 20px;
-    margin-right: 10px;
-    display: flex;
-    flex-wrap: wrap;
-    height: 100%;
-}
-.midflex{
-    margin: 20px;
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-}
-.beginleft{
-    justify-content: flex-start;
-}
-.math-table{
-    width: 50%;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-}
-.math-table > div{
-    width: 50%;
-    text-align: center;
-}
-.zusammenfassen{
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    width: 100%;
-}
-.box{
-    background-color: lightseagreen;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    transition: box-shadow 0.5s, background-color 0.5s;
-}
-.box:hover{
-    box-shadow: 0 8px 16px 0 rgba(255, 0, 0, 0.2), 0 12px 40px 0 rgba(255, 0, 0, 0.19);
-    background-color: rgb(156, 231, 229);
 }

@@ -1,0 +1,206 @@
+.matrixTableEnvironment{
+    display: flex;
+    background-color: aliceblue;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    border-radius: 25px;
+    margin: 10px;
+    padding: 10px;
+}
+.optionshalf{
+    width: 50%;
+    min-width: 565px; 
+    display: flex;
+    justify-content: space-evenly;
+}
+.matrixTable{
+    width: 100%;
+    margin: 10px;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.matrixCell{
+    
+    transition: box-shadow 0.5s;
+    
+    &:hover{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 225, 255, 0.404);
+    }  
+
+}
+.matrixHeader{
+    position: relative;
+    padding: 15px;
+    &::before{
+        content: attr(data-number);
+        visibility: hidden;
+        background-color: black;
+        color: #fff;
+        text-align: center;
+        padding: 5px 0;
+        border-radius: 25px;
+        
+        position: absolute;
+        z-index: 1;
+        width: 120px;
+        bottom: 120%;
+        left: 50%;
+        margin-left: -60px;
+
+    }
+    &::after{
+        content:  "";
+        visibility: hidden;
+
+        position: absolute;
+        left: 50%;
+        bottom: 100%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: black transparent transparent transparent;
+    }
+    &:last-of-type{
+        &:before{
+            display: none;
+        }
+        &:after{
+            display: none;
+        }
+    }
+}
+.hoverForToolTip{
+    &:hover{
+        &:after {
+            visibility: visible;
+        }
+        &:before{
+            visibility: visible;
+        }
+    }
+}
+.cell{
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    min-width: 75px;
+    height: 50px;
+    background-color: white;
+    border: none;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+    text-align: center;
+}
+.options{
+    display: flex; 
+    flex-wrap: wrap;
+    margin: 10px;
+    justify-content: space-evenly;
+}
+.thisfont{
+    font-size: large;
+    //font-family: 'Times New Roman', Times, serif;
+    font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
+    //font-variant: small-caps;
+    //font-weight: bold;
+}
+.buttondesign{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    min-width: 125px;
+    height: 50px;
+    margin: 10px;
+    border-radius: 25px;
+    text-align: center;
+    border: none;
+    background-color: rgb(211, 234, 255);
+    box-sizing: border-box;
+}
+.buttontransition{
+    
+    transition: box-shadow 0.5s, background-color 0.5s;
+    &:active{
+        transform: translateY(1px);
+    }
+    &:hover{
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 195, 255, 0.274);
+        filter: saturate(150%);        
+    }  
+}
+.notANumber{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19),  0 0 8px 0 red;
+}
+#solveButton{
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+}
+.bottomButton{
+    justify-content:  center;
+}
+h1{
+    text-align:  center;
+}
+.variableInput{
+    box-sizing: border-box;
+    padding: 0 15px 0 0;
+    transition: box-shadow 0.5s;
+
+    &:hover{
+        box-shadow: 0 0 8px 0 rgba(0, 195, 255, 0.274) inset, 0 0px 8px 0 rgba(0, 0, 0, 0.19) inset;
+    }
+}
+.focusing{
+    background-color: rgb(230, 255, 242);
+    color: black;
+}
+.changingStuff{
+    background-color: rgb(229, 249, 255);
+    color: black;
+}
+.finished{
+    font-weight: bold;
+}
+#animationspeedButtons{
+    min-width: 260px;
+}
+.animationButton{
+    height: 50px;
+    width: 65px;
+    background-color: inherit;
+    border: none;
+    font-family: inherit;
+    font-weight: inherit; 
+    font-variant: inherit;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    &.selected{
+        background-color: rgb(204, 230, 255);
+        transition: none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
+    }
+    &.left{
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+    &.right{
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+
+    }
+}
+.label {
+    box-sizing: border-box;
+    height: 50px;
+    margin: 10px;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
+    text-align: center;
+    padding: 15px;
+    border: none;
+}
+.deactivated{
+    color: grey;
+}

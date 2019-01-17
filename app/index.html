@@ -1,78 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=100, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link rel="stylesheet" href="dist/bundle.css">
-</head>
-
-<body>
-    <h1>Eine tolle Website</h1>
-    <hr/>
-    <div class="zusammenfassen">
-        <div class="two-left">
-            <div class="mathe coolshadow">
-                <div class="inputs">
-                        <input type="tel" id="zahl1" class="zahlInput coolshadow"/>
-                        <input type="tel" id="zahl2" class="zahlInput  coolshadow"/>
-                </div>
-                <div class="ergebnisliste">
-                    <div class="ergebnispaar">
-                        <div class="operator">Summe:</div>
-                        <div class="ergebnis coolshadow" id="sumergebnis"></div>
-                    </div>
-                    <div class="ergebnispaar">
-                        <div class="operator">Produkt:</div>
-                        <div class="ergebnis coolshadow" id="produktergebnis"></div>
-                    </div>
-                    <div class="ergebnispaar">
-                        <div class="operator">Potenz:</div>
-                        <div class="ergebnis coolshadow" id="potenzergebnis"></div>
-                    </div>
-                    <div class="ergebnispaar">
-                        <div class="operator">kgV:</div>
-                        <div class="ergebnis coolshadow" id="kgvergebnis"></div>
-                    </div>
-                </div>
-                <button class="box coolshadow">Berechnen</button>
-                
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=100, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Matrix</title>
+        <link rel="stylesheet" href="dist/bundle.css">
+    </head>
+    <body>
+        <h1 class=''>Deep Thought</h1>
+        <div class='matrixTableEnvironment'>
+            <div class='options-left optionshalf'>
+                <div class="label thisfont">Variabeln:</div>
+                <input type='number' id='variableNumber' min='2' max ='20' value='2' class="variableInput  label thisfont"/>
+                <button id='confirmButton' class='confirmButton buttondesign buttontransition thisfont '>Bestaetigen</button>
             </div>
-            <div class="coolshadow spiel">
-                <div class="overgame">
-                    <p id="punkte">Punkte: 0</p>
-                    <button>Reset</button>
+            <div class='options-right optionshalf'>
+                <div class='label thisfont'>Animation:</div>
+                <div id='animationspeedButtons' class='buttondesign thisfont '>
+                    <button id='noanimantion' class='animationButton left buttontransition selected thisfont'>None</button>
+                    <button id='slowanimation' class='animationButton middle buttontransition thisfont'>Slow</button>
+                    <button id='mediumanimation' class='animationButton middle buttontransition thisfont'>Medium</button>
+                    <button id='fastanimation' class='animationButton right buttontransition thisfont'>Fast</button>
                 </div>
-                <div class="undergame">
-                    <div class="redBox redBoxTransition" id="rot"></div>
-                    <div class="meter"><div class="target">&uarr;</div></div>
-                </div>
+                <button id='randomFillButton' class='buttondesign buttontransition thisfont '>Zufaellig Fuellen</button> 
             </div>
         </div>
-        <div class="right-info box coolshadow">
-            <h2>J.B.J. Fourier</h2>
-            <img src="assets/img/Fourier.jpeg" alt="Fourier" id="fourier"/>
-            <p>Fourier war der Sohn eines Schneiders und wurde schon im Alter von 10 Jahren durch den Tod seiner Eltern zum Vollwaisen. Seine weitere Erziehung fand zunächst im Pensionat des Organisten der Kathedrale von Auxerre Joseph Pallais statt, bis er in die Militärschule von Auxerre wechseln konnte. Dort entwickelte er ein starkes Interesse für die Mathematik und hatte schon im Alter von 14 Jahren den sechsbändigen Cours de mathématiques von Étienne Bézout studiert. 1783 erhielt er einen Preis für eine Arbeit über Charles Bossuts Mécanique en général. Im Jahr 1787 entschied sich Fourier, eine geistliche Laufbahn einzuschlagen, und wechselte auf die Schule der Benediktiner-Abtei Saint-Benoît-sur-Loire</p>            
+        <div class="matrixTableEnvironment">
+            <div id='matrixTableHeader' class='matrixTable'>
+                <div class="matrixHeader cell" >x1</div>
+                <div class="matrixHeader cell">x2</div>
+                <div class="matrixHeader cell">Zahl</div>
+            </div>
+            <div id='matrixTable' class='matrixTable'>
+                <input class="matrixCell cell"></input>
+                <input class="matrixCell cell"></input>
+                <input class="matrixCell cell"></input>
+                <input class="matrixCell cell"></input>
+                <input class="matrixCell cell"></input>
+                <input class="matrixCell cell"></input>
+            </div>
+            <div class="matrixTable bottomButton">
+                <button id='solveButton' class='solveButton buttontransition buttondesign thisfont'>Berechnen</button>
+            </div>
         </div>
-            
-    </div>
-    <div class="bottom-info box coolshadow">
-        <img src="assets/img/wolf1.jpeg" alt="Ein Wolf" ></img>
-        <div class="coolshadow">
-            <h2>Das hier sind Wölfe</h2>
-            <p>Der Wolf (Canis lupus) ist das größte Raubtier aus der Familie der Hunde (Canidae). Wölfe leben in der Regel in Familienverbänden, umgangssprachlich Rudel genannt. Hauptbeute sind in den meisten Regionen mittelgroße bis große Huftiere. Die Art war seit dem späten Pleistozän in mehreren Unterarten in ganz Europa, weiten Teilen Asiens, einschließlich der Arabischen Halbinsel und Japan, und in Nordamerika verbreitet.
-
-                    Wölfe wurden in Mitteleuropa ab dem 15. Jahrhundert systematisch verfolgt,[1] im 19. Jahrhundert waren sie in nahezu allen Regionen ihres weltweiten Verbreitungsgebiets vor allem durch menschliche Bejagung stark dezimiert und in West- und Mitteleuropa fast sowie in Japan vollständig ausgerottet. Seit Ende des 20. Jahrhunderts steht der Wolf in vielen Ländern unter Schutz, die Bestände erholen sich dort trotz häufiger illegaler Verfolgung. In etlichen anderen Ländern, unter anderem im Nahen Osten, aber auch in Teilen Europas, besteht für den Wolf kein gesetzlicher Schutz.[2] In Deutschland wurde im Jahr 2000 erstmals wieder die Geburt von Welpen nachgewiesen, seitdem steigt die Anzahl der Wölfe und Wolfsrudel auch in anderen Teilen Mittel- und Nordeuropas wieder an.[3] Im Erfassungszeitraum 2017/18 wurden in Deutschland 73 Rudel, 30 Paare und drei territoriale Einzeltiere registriert; damit gab es insgesamt 106 Wolfsterritorien.[4]
-                    
-                    Wölfe zählen zu den bekanntesten Raubtieren; sie haben frühzeitig Eingang in die Mythen und Märchen vieler Völker gefunden. Sie sind zudem die Stammform aller Haushunde und des sekundär wilden Dingos. </p>
-        </div>
-        <img src="assets/img/wolf2.jpeg" alt="Noch ein Wolf" ></img>
-    </div>
-
-</body>
-
-<script src="dist/bundle.js"></script>
-
+    </body>
+    <script src='dist/bundle.js'></script>
 </html>

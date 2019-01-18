@@ -1,0 +1,56 @@
+.optionshalf{
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+#animationspeedButtons{
+    min-width: 275.5px;
+}
+.animationButton{
+    height: 50px;
+    width: 65px;
+    background-color: inherit;
+    border: none;
+    font-family: inherit;
+    font-weight: inherit; 
+    font-variant: inherit;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    &.selected{
+        background-color: rgb(204, 230, 255);
+        transition: none;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
+    }
+    &.left{
+        border-top-left-radius: 25px;
+        border-bottom-left-radius: 25px;
+    }
+    &.right{
+        border-top-right-radius: 25px;
+        border-bottom-right-radius: 25px;
+
+    }
+}
+.label {
+    box-sizing: border-box;
+    height: 50px;
+    margin: 10px;
+    min-width: 110px;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
+    text-align: center;
+    padding: 15px;
+    border: none;
+}
+.variableInput{
+    box-sizing: border-box;
+    padding: 0 15px 0 0;
+    transition: box-shadow 0.5s;
+
+    &:hover{
+        box-shadow: 0 0 8px 0 rgba(0, 195, 255, 0.274) inset, 0 0px 8px 0 rgba(0, 0, 0, 0.19) inset;
+    }
+}

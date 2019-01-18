@@ -1,3 +1,6 @@
+h1{
+    text-align:  center;
+}
 .matrixTableEnvironment{
     display: flex;
     background-color: aliceblue;
@@ -7,22 +10,6 @@
     margin: 10px;
     padding: 10px;
     overflow-x: auto;
-}
-.matrixTable{
-    width: 100%;
-    margin: 10px;
-    background-color: aliceblue;
-    display: grid;
-    grid-template-columns: auto auto auto;
-}
-.matrixCell{
-    
-    transition: box-shadow 0.5s;
-    
-    &:hover{
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 225, 255, 0.404);
-    }  
-
 }
 .matrixHeader{
     position: relative;
@@ -65,15 +52,21 @@
         }
     }
 }
-.hoverForToolTip{
+.matrixTable{
+    width: 100%;
+    margin: 10px;
+    background-color: aliceblue;
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+.matrixCell{
+    
+    transition: box-shadow 0.5s;
+    
     &:hover{
-        &:after {
-            visibility: visible;
-        }
-        &:before{
-            visibility: visible;
-        }
-    }
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 225, 255, 0.404);
+    }  
+
 }
 .cell{
     border-radius: 25px;
@@ -87,35 +80,6 @@
     width: 100%;
     text-align: center;
 }
-.thisfont{
-    font-size: large;
-    font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
-}
-.buttondesign{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    min-width: 125px;
-    height: 50px;
-    margin: 10px;
-    border-radius: 25px;
-    text-align: center;
-    border: none;
-    background-color: rgb(211, 234, 255);
-    box-sizing: border-box;
-}
-.buttontransition{
-    
-    transition: box-shadow 0.5s, background-color 0.5s;
-    &:active{
-        transform: translateY(1px);
-    }
-    &:hover{
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 195, 255, 0.274);
-        filter: saturate(150%);        
-    }  
-}
-.notANumber{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19),  0 0 8px 0 red;
-}
 #solveButton{
     width: 100%;
     margin: 0;
@@ -123,107 +87,4 @@
 }
 .bottomButton{
     justify-content:  center;
-}
-h1{
-    text-align:  center;
-}
-.deactivated{
-    color: grey;
-}
-.label {
-    box-sizing: border-box;
-    height: 50px;
-    margin: 10px;
-    min-width: 110px;
-    background-color: white;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
-    text-align: center;
-    padding: 15px;
-    border: none;
-}
-.optionshalf{
-    box-sizing: border-box;
-    display: flex;
-    flex-wrap: wrap;
-}
-.variableInput{
-    box-sizing: border-box;
-    padding: 0 15px 0 0;
-    transition: box-shadow 0.5s;
-
-    &:hover{
-        box-shadow: 0 0 8px 0 rgba(0, 195, 255, 0.274) inset, 0 0px 8px 0 rgba(0, 0, 0, 0.19) inset;
-    }
-}
-.focusing{
-    background-color: rgb(230, 255, 242);
-    color: black;
-}
-.changingStuff{
-    background-color: rgb(229, 249, 255);
-    color: black;
-}
-.finished{
-    font-weight: bold;
-}
-#animationspeedButtons{
-    min-width: 275.5px;
-}
-.animationButton{
-    height: 50px;
-    width: 65px;
-    background-color: inherit;
-    border: none;
-    font-family: inherit;
-    font-weight: inherit; 
-    font-variant: inherit;
-    box-sizing: border-box;
-    padding: 0;
-    margin: 0;
-    &.selected{
-        background-color: rgb(204, 230, 255);
-        transition: none;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
-    }
-    &.left{
-        border-top-left-radius: 25px;
-        border-bottom-left-radius: 25px;
-    }
-    &.right{
-        border-top-right-radius: 25px;
-        border-bottom-right-radius: 25px;
-
-    }
-}
-@media only screen and (max-width: 486px){
-    .optionshalf{
-        //width: 100%;
-        flex-direction: column;
-    }
-}
-@media only screen and (min-width: 486px){
-    .optionshalf{
-        max-width: 490px;
-        //background-color: red;
-        justify-content: center;
-    }
-}
-@media only screen and (min-width: 600px){
-    .options {
-        overflow: visible;
-    }
-    .optionshalf{
-        max-width: none;        
-        width: 100%;
-        min-width: 582px;
-        justify-content: space-between; 
-    }
-
-}
-@media only screen and (min-width: 1200px){
-    .optionshalf{
-        width: 50%;
-        justify-content: space-evenly;
-    }
 }

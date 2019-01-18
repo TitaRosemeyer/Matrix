@@ -2,6 +2,7 @@ import { Number } from "core-js";
 import { changeExt } from "upath";
 import { networkInterfaces } from "os";
 import { id } from "postcss-selector-parser";
+//import { start } from "repl";
 
 //HTML-Elements
 const variableNumberInput = document.getElementById('variableNumber');
@@ -18,6 +19,8 @@ const animationspeedButtonsHelper = document.querySelectorAll('.animationButton'
 animationspeedButtonsHelper.forEach(elem => {
     animationspeedButtons.push(elem)
 });
+
+//HTML-Elements that might be changing
 const matrixCells = () => {
     return document.querySelectorAll('.matrixCell');
 }
@@ -25,11 +28,207 @@ const matrixHeaders = () => {
     return document.querySelectorAll('.matrixHeader');
 }
 
-let isMatrixSolved = false;
+//start-configurations
+let isMatrixSolved = true;
 let variableNumber = 2;
 let beforeNumber = 2;
 let animationspeed = 0;
 let animationtime = 0;
+
+
+//helpfunctions
+const round = (zahl, nachkommastellen) => {
+    var a = Math.pow(10, nachkommastellen);
+    return (Math.round(zahl*a)/a);
+}
+const celldiv = (now, before) => {
+    let smaller = Math.min(now, before);
+    let bigger = Math.max(now, before);
+    let sum = 0;
+    for(let i = smaller+1; i<=bigger; i++){
+        sum+=i;
+    }
+    return 2*sum;
+}
+const sleep = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+const isAllNumbers = (elementList) => {
+    let allnumbers = true;
+    for(let i=0; i< elementList.length; i++){
+        if(!elementList[i].value || isNaN(elementList[i].value)){
+            elementList[i].classList.add('notANumber');
+            allnumbers = false;
+        } else {
+            elementList[i].classList.remove('notANumber');
+        }
+    }
+    return allnumbers;
+}
+const setAnimationTime = (animationspeed) =>{
+    switch (animationspeed) {
+        case 1:
+            animationtime = 1024;
+            break;
+        case 2:
+            animationtime = 256;
+            break;
+        case 3:
+            animationtime = 64;
+            break;
+        default: 
+            animationtime = 0;
+    }
+}
+
+
+//getting sth from  HTML
+const getRow = (matrixDisplayer, rowIndex, matrixLength) => {
+    let rI = rowIndex;
+    let mD = matrixDisplayer;
+    let mL = matrixLength;
+    let row = new Array(mL);
+    let count = 0;
+    for(let i=rI*(mL+1); i<(rI+1)*(mL+1); i++){
+        row[count]=mD[i];
+        count++;
+    }
+    return row;
+}
+const fillMatrix = (matrix, elementList) => {
+    let length = matrix.length,
+        count = 0;
+    for(let i=0; i<length; i++){
+        for(let j=0; j<=length; j++){
+            matrix[i][j] = elementList[count].value;
+            count++;
+        }
+    }
+}
+
+
+//doing sth in HTML
+const updateRow = (matrixDisplayer, rowIndex, matrix) => {
+    getRow(matrixDisplayer, rowIndex, matrix.length).forEach((element, index) => {
+        let matrixvalue = matrix[rowIndex][index];
+        element.value=round(matrixvalue, 5);
+    });
+}
+const deactivateButtons = () => {
+    clickButtons.forEach((elem, index) => {
+        elem.classList.replace('buttontransition', 'deactivated');
+        elem.removeEventListener('click', clickButtonsEvents[index]);
+    });
+
+}
+const activateButtons  = () => {
+    if (animationspeedButtons[0].classList.contains('deactivated')){
+        animationspeedButtons[0].classList.replace('deactivated', 'buttontransition');
+    }
+    clickButtons.forEach((elem, index) => {
+        elem.addEventListener('click', clickButtonsEvents[index]);
+        elem.classList.replace('deactivated', 'buttontransition');
+    });
+}
+const addCells = (beforeNumber, nowNumber, headerElement, matrixTableElement) => {
+    let cellDiv = celldiv(nowNumber, beforeNumber);
+    for(let i=beforeNumber+1; i<= nowNumber; i++ ){
+        let numberCell = headerElement.lastChild;
+        let newHeader = document.createElement('div');
+        newHeader.className='matrixHeader cell';
+        newHeader.innerHTML='x'+i;
+        headerElement.insertBefore(newHeader, numberCell.previousSibling);
+    }
+    for(let i=0; i<cellDiv; i++){
+        let newCell = document.createElement('input');
+        newCell.className='matrixCell cell';
+        matrixTableElement.appendChild(newCell);
+    }
+}
+const removeCells = (beforeNumber, nowNumber, headerElement, matrixTableElement) => {
+    let cellDiv = celldiv(nowNumber, beforeNumber);
+    for(let i=nowNumber; i< beforeNumber; i++){
+        let headCells = headerElement.childNodes;
+        headerElement.removeChild(headCells[headCells.length-3]);
+    }
+    for(let i=0; i< cellDiv; i++){
+        matrixTableElement.removeChild(matrixTableElement.lastChild);
+    }      
+
+}
+const changeColumnNumber = (newNumber) => {
+    let text ='';
+    for(let i=0; i<=newNumber; i++){
+        text +=' auto';
+    }
+    for(let i=0; i<matrixTables.length; i++){
+        matrixTables[i].style.gridTemplateColumns = text;
+    }
+}
+const displaymatrix = (matrix, elementList) => {
+    let count = 0;
+    matrix.forEach(row => {
+        row.forEach(cell =>{
+            if (cell === ''){
+                elementList[count].value=cell;
+                count++;
+            } else {
+                let roundcell = round(cell, 5);
+                if(roundcell !== 0){
+                    elementList[count].classList.add('finished');
+                }
+                elementList[count].value=roundcell;
+                count++;
+            }
+        });
+    });
+}
+const addSolutions = (matrix, elementList) => {
+    elementList.forEach((element, index) => {
+        if(index<matrix.length){
+            element.classList.add('hoverForToolTip');
+            let solution = String(round(matrix[index][matrix.length], 5));
+            element.setAttribute('data-number', solution);
+        }
+    });
+}
+const removeSolutions = (elementList) => {
+    elementList.forEach(element => {
+        element.classList.remove('hoverForToolTip');
+    });
+}
+
+
+//summarizing functions
+const solvedmatrix = (matrix) => {
+    isMatrixSolved = true;
+    activateButtons();
+    addSolutions(matrix, matrixHeaders());
+    displaymatrix(matrix, matrixCells());
+}
+const startmatrix = (matrixDisplayer) => {
+    isMatrixSolved = false;
+    let matrixToSolve = newmatrix(variableNumber);
+    fillMatrix(matrixToSolve, matrixDisplayer);
+    if(animationspeed>0){
+        animationspeedButtons[0].classList.replace('buttontransition', 'deactivated');
+        solvematrixvisual(matrixToSolve);
+    } else {
+        solvematrix(matrixToSolve);
+    }
+}
+const changeMatrixTable = (nowNumber, beforeNumber) => {
+    changeColumnNumber(nowNumber);
+    let cellDiv = celldiv(nowNumber, beforeNumber);
+    if(nowNumber>beforeNumber){
+        addCells(beforeNumber, nowNumber, matrixTableHeader, realMatrixTable);
+    } else {  
+        removeCells(beforeNumber, nowNumber, matrixTableHeader, realMatrixTable);
+    }
+}
+
+
+
 
 //MatrixFunctions without HTML/CSS
 const newmatrix = (length=3) => {
@@ -41,20 +240,6 @@ const newmatrix = (length=3) => {
             mymatrix[i] = new Array(length+1);
         }
         return mymatrix;
-    }
-}
-const round = (zahl, nachkommastellen) => {
-    var a = Math.pow(10, nachkommastellen);
-    return (Math.round(zahl*a)/a);
-}
-const makeZero = (matrix, rowIndex, columnIndex) => {
-    let i=rowIndex;
-    let j= columnIndex;
-    if(matrix[i][j]!=0){
-        let factor = matrix[j][j]/matrix[i][j];
-        matrix[i] = matrix[i].map(item=> factor*item);
-        matrix[i] = matrix[i].map((item, index) => item - matrix[j][index]);
-        matrix[i][j]=0;
     }
 }
 const solvematrix = (matrix) => {
@@ -83,90 +268,18 @@ const solvematrix = (matrix) => {
     };
     solvedmatrix(matrix);
 }
-const celldiv = (now, before) => {
-    let smaller = Math.min(now, before);
-    let bigger = Math.max(now, before);
-    let sum = 0;
-    for(let i = smaller+1; i<=bigger; i++){
-        sum+=i;
-    }
-    return 2*sum;
-}
-const setAnimationTime = (animationspeed) =>{
-    switch (animationspeed) {
-        case 1:
-            animationtime = 1024;
-            break;
-        case 2:
-            animationtime = 256;
-            break;
-        case 3:
-            animationtime = 64;
-            break;
-        default: 
-            animationtime = 0;
+const makeZero = (matrix, rowIndex, columnIndex) => {
+    let i=rowIndex;
+    let j= columnIndex;
+    if(matrix[i][j]!=0){
+        let factor = matrix[j][j]/matrix[i][j];
+        matrix[i] = matrix[i].map(item=> factor*item);
+        matrix[i] = matrix[i].map((item, index) => item - matrix[j][index]);
+        matrix[i][j]=0;
     }
 }
 
 //Neues Projekt: Visuelle Loesung einer Matrix
-const solvedmatrix = (matrix) => {
-    if (animationspeedButtons[0].classList.contains('deactivated')){
-        animationspeedButtons[0].classList.replace('deactivated', 'buttontransition');
-    }
-    clickButtons.forEach((elem, index) => {
-        elem.addEventListener('click', clickButtonsEvents[index]);
-        elem.classList.replace('deactivated', 'buttontransition');
-    });
-    isMatrixSolved = true;
-    addSolutions(matrix, matrixHeaders());
-    displaymatrix(matrix, matrixCells());
-}
-const getRow = (matrixDisplayer, rowIndex, matrixLength) => {
-    let rI = rowIndex;
-    let mD = matrixDisplayer;
-    let mL = matrixLength;
-    let row = new Array(mL);
-    let count = 0;
-    for(let i=rI*(mL+1); i<(rI+1)*(mL+1); i++){
-        row[count]=mD[i];
-        count++;
-    }
-    return row;
-}
-const updateRow = (matrixDisplayer, rowIndex, matrix) => {
-    getRow(matrixDisplayer, rowIndex, matrix.length).forEach((element, index) => {
-        let matrixvalue = matrix[rowIndex][index];
-        element.value=round(matrixvalue, 5);
-    });
-}
-async function makeZeroVisual(matrix, rowIndex, columnIndex, matrixDisplayer, nowAnimationTime){
-    let i=rowIndex;
-    let j= columnIndex;
-    let mD = matrixDisplayer;
-    let thisRow = getRow(mD, i, matrix.length);
-    let aT = nowAnimationTime;
-    thisRow.forEach(elem => {
-        elem.classList.add('changingStuff');
-    });
-    await sleep(aT);
-    if(matrix[i][j]!=0){
-        let factor = matrix[j][j]/matrix[i][j];
-        matrix[i] = matrix[i].map(item=> factor*item);
-        updateRow(mD, i, matrix);
-        await sleep(aT);
-        matrix[i] = matrix[i].map((item, index) => item - matrix[j][index]);
-        matrix[i][j]=0;
-        updateRow(mD, i, matrix);
-        await sleep(aT);
-    }
-    thisRow.forEach(elem => {
-        elem.classList.remove('changingStuff');
-    });
-    
-}
-const sleep = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
 async function solvematrixvisual(matrix) {
     let mC = matrixCells();
     let l= matrix.length;
@@ -221,105 +334,30 @@ async function solvematrixvisual(matrix) {
     }
     solvedmatrix(matrix);
 }
-
-//MatrixFunctions with HTML/CSS
-const displaymatrix = (matrix, elementList) => {
-    let count = 0;
-    matrix.forEach(row => {
-        row.forEach(cell =>{
-            if (cell === ''){
-                elementList[count].value=cell;
-                count++;
-            } else {
-                let roundcell = round(cell, 5);
-                if(roundcell !== 0){
-                    elementList[count].classList.add('finished');
-                }
-                elementList[count].value=roundcell;
-                count++;
-            }
-        });
+async function makeZeroVisual(matrix, rowIndex, columnIndex, matrixDisplayer, nowAnimationTime){
+    let i=rowIndex;
+    let j= columnIndex;
+    let mD = matrixDisplayer;
+    let thisRow = getRow(mD, i, matrix.length);
+    let aT = nowAnimationTime;
+    thisRow.forEach(elem => {
+        elem.classList.add('changingStuff');
     });
-}
-const changeColumnNumber = (newNumber) => {
-    let text ='';
-    for(let i=0; i<=newNumber; i++){
-        text +=' auto';
+    await sleep(aT);
+    if(matrix[i][j]!=0){
+        let factor = matrix[j][j]/matrix[i][j];
+        matrix[i] = matrix[i].map(item=> factor*item);
+        updateRow(mD, i, matrix);
+        await sleep(aT);
+        matrix[i] = matrix[i].map((item, index) => item - matrix[j][index]);
+        matrix[i][j]=0;
+        updateRow(mD, i, matrix);
+        await sleep(aT);
     }
-    for(let i=0; i<matrixTables.length; i++){
-        matrixTables[i].style.gridTemplateColumns = text;
-    }
-}
-const addCells = (beforeNumber, nowNumber, headerElement, matrixTableElement) => {
-    let cellDiv = celldiv(nowNumber, beforeNumber);
-    for(let i=beforeNumber+1; i<= nowNumber; i++ ){
-        let numberCell = headerElement.lastChild;
-        let newHeader = document.createElement('div');
-        newHeader.className='matrixHeader cell';
-        newHeader.innerHTML='x'+i;
-        headerElement.insertBefore(newHeader, numberCell.previousSibling);
-    }
-    for(let i=0; i<cellDiv; i++){
-        let newCell = document.createElement('input');
-        newCell.className='matrixCell cell';
-        matrixTableElement.appendChild(newCell);
-    }
-}
-const removeCells = (beforeNumber, nowNumber, headerElement, matrixTableElement) => {
-    let cellDiv = celldiv(nowNumber, beforeNumber);
-    for(let i=nowNumber; i< beforeNumber; i++){
-        let headCells = headerElement.childNodes;
-        headerElement.removeChild(headCells[headCells.length-3]);
-    }
-    for(let i=0; i< cellDiv; i++){
-        matrixTableElement.removeChild(matrixTableElement.lastChild);
-    }      
-
-}
-const changeMatrixTable = (nowNumber, beforeNumber) => {
-    changeColumnNumber(nowNumber);
-    let cellDiv = celldiv(nowNumber, beforeNumber);
-    if(nowNumber>beforeNumber){
-        addCells(beforeNumber, nowNumber, matrixTableHeader, realMatrixTable);
-    } else {  
-        removeCells(beforeNumber, nowNumber, matrixTableHeader, realMatrixTable);
-    }
-}
-const isAllNumbers = (elementList) => {
-    let allnumbers = true;
-    for(let i=0; i< elementList.length; i++){
-        if(!elementList[i].value || isNaN(elementList[i].value)){
-            elementList[i].classList.add('notANumber');
-            allnumbers = false;
-        } else {
-            elementList[i].classList.remove('notANumber');
-        }
-    }
-    return allnumbers;
-}
-const fillMatrix = (matrix, elementList) => {
-    let length = matrix.length,
-        count = 0;
-    for(let i=0; i<length; i++){
-        for(let j=0; j<=length; j++){
-            matrix[i][j] = elementList[count].value;
-            count++;
-        }
-    }
-}
-const addSolutions = (matrix, elementList) => {
-    elementList.forEach((element, index) => {
-        if(index<matrix.length){
-            element.classList.add('hoverForToolTip');
-            let solution = String(round(matrix[index][matrix.length], 5));
-            element.setAttribute('data-number', solution);
-        }
+    thisRow.forEach(elem => {
+        elem.classList.remove('changingStuff');
     });
-}
-const removeSolutions = (elementList) => {
-    elementList.forEach(element => {
-        element.classList.remove('hoverForToolTip');
-    });
+    
 }
 
 //EventFunctions
@@ -335,38 +373,18 @@ const confirmButtonOnClick = (event) => {
     } 
 }
 const solveButtonOnClick = (event) => {
-    clickButtons.forEach((elem, index) => {
-        elem.classList.replace('buttontransition', 'deactivated');
-        elem.removeEventListener('click', clickButtonsEvents[index]);
-    });
-    removeSolutions(matrixHeaders())
+    removeSolutions(matrixHeaders());
     let mC = matrixCells();
     if(isAllNumbers(mC)){
-        isMatrixSolved = false;
-        let matrixToSolve = newmatrix(variableNumber);
-        fillMatrix(matrixToSolve, mC);
-        if(animationspeed>0){
-            animationspeedButtons[0].classList.replace('buttontransition', 'deactivated');
-            solvematrixvisual(matrixToSolve);
-        } else {
-            solvematrix(matrixToSolve);
-        }
+        deactivateButtons();
+        startmatrix(mC);
     } else {
-        clickButtons.forEach((elem, index) => {
-            elem.classList.replace('deactivated', 'buttontransition');
-            elem.addEventListener('click', clickButtonsEvents[index]);
-        });
         alert("Please enter a number in every cell of the matrix!");
     }
 }
 const randomButtonOnClick = (event) => {
     matrixCells().forEach(element => {
         element.value = Math.floor(Math.random()*1000);
-    });
-}
-const resetfinished = (event) => {
-    matrixCells().forEach(elem => {
-        elem.classList.remove('finished');
     });
 }
 const animationspeedButtonsOnClick = (event) => {
@@ -383,6 +401,11 @@ const animationspeedButtonsOnClick = (event) => {
         setAnimationTime(animationspeed);
     } 
 }
+const resetfinished = (event) => {
+    matrixCells().forEach(elem => {
+        elem.classList.remove('finished');
+    });
+}
 
 //EventListeners
 variableNumberInput.addEventListener('input', variableNumberOnInput);
@@ -396,6 +419,7 @@ animationspeedButtons.forEach(elem => {
     elem.addEventListener('click', animationspeedButtonsOnClick)
 });
 
-variableNumberInput.value = '2';
 
+//something else
+variableNumberInput.value = '2';
 const clickButtonsEvents = [confirmButtonOnClick, randomButtonOnClick, solveButtonOnClick];

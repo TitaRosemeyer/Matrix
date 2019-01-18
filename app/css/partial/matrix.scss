@@ -6,12 +6,7 @@
     border-radius: 25px;
     margin: 10px;
     padding: 10px;
-}
-.optionshalf{
-    width: 50%;
-    min-width: 565px; 
-    display: flex;
-    justify-content: space-evenly;
+    overflow-x: auto;
 }
 .matrixTable{
     width: 100%;
@@ -92,18 +87,9 @@
     width: 100%;
     text-align: center;
 }
-.options{
-    display: flex; 
-    flex-wrap: wrap;
-    margin: 10px;
-    justify-content: space-evenly;
-}
 .thisfont{
     font-size: large;
-    //font-family: 'Times New Roman', Times, serif;
     font-family: 'Avantgarde', 'TeX Gyre Adventor', 'URW Gothic L', sans-serif;
-    //font-variant: small-caps;
-    //font-weight: bold;
 }
 .buttondesign{
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -141,6 +127,26 @@
 h1{
     text-align:  center;
 }
+.deactivated{
+    color: grey;
+}
+.label {
+    box-sizing: border-box;
+    height: 50px;
+    margin: 10px;
+    min-width: 110px;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
+    text-align: center;
+    padding: 15px;
+    border: none;
+}
+.optionshalf{
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+}
 .variableInput{
     box-sizing: border-box;
     padding: 0 15px 0 0;
@@ -162,7 +168,7 @@ h1{
     font-weight: bold;
 }
 #animationspeedButtons{
-    min-width: 260px;
+    min-width: 275.5px;
 }
 .animationButton{
     height: 50px;
@@ -190,17 +196,34 @@ h1{
 
     }
 }
-.label {
-    box-sizing: border-box;
-    height: 50px;
-    margin: 10px;
-    background-color: white;
-    border-radius: 25px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2) inset;
-    text-align: center;
-    padding: 15px;
-    border: none;
+@media only screen and (max-width: 486px){
+    .optionshalf{
+        //width: 100%;
+        flex-direction: column;
+    }
 }
-.deactivated{
-    color: grey;
+@media only screen and (min-width: 486px){
+    .optionshalf{
+        max-width: 490px;
+        //background-color: red;
+        justify-content: center;
+    }
+}
+@media only screen and (min-width: 600px){
+    .options {
+        overflow: visible;
+    }
+    .optionshalf{
+        max-width: none;        
+        width: 100%;
+        min-width: 582px;
+        justify-content: space-between; 
+    }
+
+}
+@media only screen and (min-width: 1200px){
+    .optionshalf{
+        width: 50%;
+        justify-content: space-evenly;
+    }
 }

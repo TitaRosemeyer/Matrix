@@ -12,6 +12,7 @@ const realMatrixTable = document.getElementById('matrixTable');
 const matrixTableHeader = document.getElementById('matrixTableHeader');
 const randomButton = document.getElementById('randomFillButton');
 const resetfinishedButtons = [randomButton, confirmButton];
+const clickButtons = [confirmButton, randomButton, solveButton];
 const animationspeedButtonsHelper = document.querySelectorAll('.animationButton'),
       animationspeedButtons = [];
 animationspeedButtonsHelper.forEach(elem => {
@@ -94,13 +95,13 @@ const celldiv = (now, before) => {
 const setAnimationTime = (animationspeed) =>{
     switch (animationspeed) {
         case 1:
-            animationtime = 1000;
+            animationtime = 1024;
             break;
         case 2:
-            animationtime = 500;
+            animationtime = 256;
             break;
         case 3:
-            animationtime = 250;
+            animationtime = 64;
             break;
         default: 
             animationtime = 0;
@@ -110,13 +111,15 @@ const setAnimationTime = (animationspeed) =>{
 //Neues Projekt: Visuelle Loesung einer Matrix
 const solvedmatrix = (matrix) => {
     if (animationspeedButtons[0].classList.contains('deactivated')){
-        animationspeedButtons[0].classList.replace('deavtivated', 'buttontransition');
+        animationspeedButtons[0].classList.replace('deactivated', 'buttontransition');
     }
+    clickButtons.forEach((elem, index) => {
+        elem.addEventListener('click', clickButtonsEvents[index]);
+        elem.classList.replace('deactivated', 'buttontransition');
+    });
     isMatrixSolved = true;
-    solveButton.addEventListener('click', solveButtonOnClick);
-    solveButton.classList.replace('deactivated', 'buttontransition');
-    displaymatrix(matrix, matrixCells());
     addSolutions(matrix, matrixHeaders());
+    displaymatrix(matrix, matrixCells());
 }
 const getRow = (matrixDisplayer, rowIndex, matrixLength) => {
     let rI = rowIndex;
@@ -135,12 +138,6 @@ const updateRow = (matrixDisplayer, rowIndex, matrix) => {
         let matrixvalue = matrix[rowIndex][index];
         element.value=round(matrixvalue, 5);
     });
-}
-const getCell = (matrixDisplayer, matrixIndex, matrixLength) => {
-    let row = matrixIndex[0], 
-        column = matrixIndex[1];
-    let index = column*(matrixLength+1)+row;
-    return matrixDisplayer[index];
 }
 async function makeZeroVisual(matrix, rowIndex, columnIndex, matrixDisplayer, nowAnimationTime){
     let i=rowIndex;
@@ -211,9 +208,6 @@ async function solvematrixvisual(matrix) {
             }
             thisRow.forEach(elem => {
                 elem.classList.remove('focusing');
-                if (elem.value !== '0'){
-                    //elem.classList.add('finished');   
-                } 
             });
         }else{
             alert('Dieses Gleichungssystem hat keine eindeutige Loesung');
@@ -237,10 +231,11 @@ const displaymatrix = (matrix, elementList) => {
                 elementList[count].value=cell;
                 count++;
             } else {
-                if(cell !== 0){
+                let roundcell = round(cell, 5);
+                if(roundcell !== 0){
                     elementList[count].classList.add('finished');
                 }
-                elementList[count].value=round(cell, 5);
+                elementList[count].value=roundcell;
                 count++;
             }
         });
@@ -326,6 +321,7 @@ const removeSolutions = (elementList) => {
         element.classList.remove('hoverForToolTip');
     });
 }
+
 //EventFunctions
 const variableNumberOnInput = (event) =>{
     variableNumber = parseInt(event.target.value) ;
@@ -339,8 +335,10 @@ const confirmButtonOnClick = (event) => {
     } 
 }
 const solveButtonOnClick = (event) => {
-    solveButton.classList.replace('buttontransition', 'deactivated');
-    solveButton.removeEventListener('click', solveButtonOnClick);
+    clickButtons.forEach((elem, index) => {
+        elem.classList.replace('buttontransition', 'deactivated');
+        elem.removeEventListener('click', clickButtonsEvents[index]);
+    });
     removeSolutions(matrixHeaders())
     let mC = matrixCells();
     if(isAllNumbers(mC)){
@@ -354,6 +352,10 @@ const solveButtonOnClick = (event) => {
             solvematrix(matrixToSolve);
         }
     } else {
+        clickButtons.forEach((elem, index) => {
+            elem.classList.replace('deactivated', 'buttontransition');
+            elem.addEventListener('click', clickButtonsEvents[index]);
+        });
         alert("Please enter a number in every cell of the matrix!");
     }
 }
@@ -395,3 +397,5 @@ animationspeedButtons.forEach(elem => {
 });
 
 variableNumberInput.value = '2';
+
+const clickButtonsEvents = [confirmButtonOnClick, randomButtonOnClick, solveButtonOnClick];

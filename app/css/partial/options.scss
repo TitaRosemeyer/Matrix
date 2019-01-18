@@ -5,7 +5,7 @@
 }
 
 #animationspeedButtons{
-    min-width: 275.5px;
+    min-width: 275px;
 }
 .animationButton{
     height: 50px;
@@ -30,7 +30,9 @@
     &.right{
         border-top-right-radius: 25px;
         border-bottom-right-radius: 25px;
-
+    }
+    &.middle{
+        width: 72.5px;
     }
 }
 .label {
